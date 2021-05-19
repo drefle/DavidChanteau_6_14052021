@@ -3,14 +3,25 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const sauceRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
+const mongoSanitize = require('express-mongo-sanitize');
 const path = require('path');
 const helmet = require('helmet');
+const cookieSession = require('cookie-session');
 require('dotenv').config();
 
 
 const app = express();
 
 app.use(helmet());
+app.use(cookieSession({
+  name: 'session',
+  keys: [process.env.SES_KEY1, process.env.SES_KEY2],
+  cookie: {
+    httpOnly: true,
+    maxAge: 900000,
+    secure: true,
+  }
+}))
 
 
 mongoose.connect(process.env.MONGODB_URL,
@@ -31,7 +42,9 @@ app.use((req, res, next) => {
     next();
   });
 
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(mongoSanitize()); 
 
 app.use('/images',express.static(path.join(__dirname,'images')));
 app.use('/api/sauces', sauceRoutes);

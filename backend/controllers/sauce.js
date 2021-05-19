@@ -1,15 +1,11 @@
 const Sauce = require('../models/Sauce');
-const sanitize = require ('mongo-sanitize');
+var mask = require('json-mask');
 const fs = require('fs');
 
 
 exports.createSauce = (req,res,next) =>{ 
     const sauceObject = JSON.parse(req.body.sauce);
     delete sauceObject._id;
-    sauceObject.name = sanitize(sauceObject.name);
-    sauceObject.manufacturer = sanitize(sauceObject.manufacturer);
-    sauceObject.description = sanitize(sauceObject.description);
-    sauceObject.mainPepper = sanitize(sauceObject.mainPepper);
     const sauce = new Sauce({
         ...sauceObject,
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
@@ -25,8 +21,9 @@ exports.createSauce = (req,res,next) =>{
 
 
 exports.getAllSauces = (req, res, next) => {
+    let fields = 'name,heat,imageUrl,_id';
     Sauce.find()
-    .then(sauces => res.status(200).json(sauces))
+    .then(sauces => res.status(200).json(mask(sauces,fields)))
     .catch(error => res.status(400).json({error}));
 };
 

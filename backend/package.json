@@ -10,14 +10,18 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "cookie-session": "^1.4.0",
     "dotenv": "^9.0.2",
     "express": "^4.17.1",
+    "express-mongo-sanitize": "^2.1.0",
+    "express-validator": "^6.11.1",
     "helmet": "^4.6.0",
     "jsonwebtoken": "^8.5.1",
     "mongo-sanitize": "^1.1.0",
     "mongoose": "^5.12.7",
     "mongoose-unique-validator": "^2.0.3",
     "multer": "^1.4.2",
+    "openssl": "^1.1.0",
     "validator": "^13.6.0"
   }
 }
