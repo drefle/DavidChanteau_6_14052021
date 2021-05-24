@@ -1,7 +1,14 @@
 # DavidChanteau_6_14052021
 
-ng serve <-- dans le dossier frontend
+## Dans le dossier frontend
+ng serve
 
-nodemon server <-- dans le dossier backend
+## Dans le dossier backend
+npm install -g nodemon 
 
-localhost:4200 <-- dans le navigateur
+npm install
+
+nodemon server
+
+## Dans le navigateur
+localhost:4200
